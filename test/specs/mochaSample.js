@@ -1,5 +1,6 @@
 const sampleTest = require('./sampleTest');
 const { expect , assert } = require("chai");
+const { describe } = require('mocha');
 
 // describe section : Feature
 describe('Login', () => {
@@ -115,3 +116,53 @@ describe('Login', () => {
     });
 
 });
+
+// Create a “describe” block
+// 12. Create an “it” block
+// 13. Automate below testcase:
+//     Verify facebook title contains LoG In (ignore cases)
+//     Steps:
+//     1. Launch facebook.com
+//     2. Get the page title
+//     3. Verify pageTitle contains “LoG In” (ignoring cases)
+
+/**
+ * launch new browser window
+ * launch facebook.com 
+ * get the page title 
+ * compare page title with expected result 
+ */
+
+
+describe('Launch Website andverify title', () => {
+
+    it.only('Verify the page title', async () => { // if I didnt do it.only it did not execute the test case. 
+        const webpage = ('https://www.apple.com/')
+        await browser.url(webpage)
+        await browser.pause(7000);
+
+        const pageTitle = await browser.getTitle();
+
+        console.log('\nPage title');
+        console.log(pageTitle);
+        console.log('Page title\n');
+
+        expectedPageTitle = 'Bpple';
+        expect(pageTitle, 'Apple title is not as expected').to.equal(expectedPageTitle);  
+
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+})
