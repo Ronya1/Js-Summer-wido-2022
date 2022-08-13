@@ -20,7 +20,7 @@ const { expect } = require("chai");
 
 describe('feels Like Temp Is Between Low Temp and High Temp', () => {
     
-    it.only('Verify Temp', async () => {
+    it('Verify Temp', async () => {
         
        await browser.url('https://darksky.net/')
        await browser.pause(1000)
@@ -35,7 +35,7 @@ describe('feels Like Temp Is Between Low Temp and High Temp', () => {
        const highTempNoDegree = highTemp.substring(0,highTemp.length-1)
        const lowTempNoDegree = lowTemp.substring(0,lowTemp.length-1)
 
-        //expect (feelsLike <= highTemp && feelsLike >= lowTemp, "Working").to.be.true;
+        expect (feelsLikeNoDegree <= highTempNoDegree && feelsLikeNoDegree >= lowTempNoDegree, "Working").to.be.true;
 
         // The below is all working and removing the degree with a dynamic length. 
         console.log('number Debug')
@@ -109,6 +109,24 @@ describe('User is able to get their temp', () => {
  * 
  */
 
+    describe('User Gets Error Message', () => {
+        it('verify user gets error message The email address or mobile number you entered isnt connected to an account', async () => {
+            await browser.url('https://www.facebook.com/') // goes to FB.com
+            await browser.pause(2000)
+
+            btnClick_LogIn = $('button[name=login]').click(); // Click the Login button 
+            await browser.pause(2000)
+
+            errorMessage = await $('div*=The email or mobile').getText();
+            await browser.pause(2000)
+
+            // The below works and passed when changing a value in the includes function. 
+            expect(errorMessage.includes('The email or mobile number you entered isn’t connected to an account.'), "Error Message Contains The email address or mobile number you entered isnt connected to an account").to.be.true
+            //console.log(`\n Testing Error Message ${errorMessage}`) 
+        });
+
+    });
+
 
 /**
  * Tc-4:
@@ -125,3 +143,61 @@ describe('User is able to get their temp', () => {
  * 8. Verify 'Keep me signed in' is selected
  * 
  */
+
+/**
+ * GIVEN: 
+ *      I am on facebook.com 
+ * WHEN: 
+ *      I click on 'Messenger
+ * THEN:
+ *      I VERIFY Keep me signed in' is not selected
+ * WHEN:
+ *      I click the Login button 
+ * THEN:
+ *      I verify Find your account and log in" is displayed 
+ * AND: 
+ *     I Verify 'Continue' button is enabled
+ * THEN: 
+ *      I verify 'Keep me signed in' is not selected 
+ * AND: 
+ *      I Click 'Keep me signed in'
+ * THEN: 
+ *      I verify 'Keep me signed in' is selected
+ * 
+ */
+
+    describe('Verify empty messenger login flow', () => {
+        it.only('Empty Login Flow 1', async() => {
+            await browser.url('https://www.facebook.com/') // goes to FB.com 
+            await browser.pause(1000)
+
+            messengerLink = await $('a[title*=Messenger]').click(); // finds and clicks messenger 
+            await browser.pause(1000)
+            messengerNotSelected = await $('div[class*=Label]').isSelected(); //confirms messenger is not selected (false value)
+            await browser.pause(1000)
+            expect(messengerNotSelected, "Keep Me Signed In Is Selected").to.be.false // verifies the above to be false 
+
+            messengerPageLoginBtn = await $('button[id=loginbutton]').click(); // Finds and clicks login button
+            await browser.pause(1000)
+
+            //  I verify Find your account and log in" is displayed 
+            MessengerPageLink = await browser.getUrl() // got new url for the redirect
+            isFindYourAcctPresent = await $('*=Find your account').isDisplayed(); // verifies that 'Find your account and log in" is displayed'
+            isContinueEnabled = await $('#loginbutton').isEnabled(); // Verifies 'Continue' button is enabled
+            isCheckBoxSelected2 = await $('input[type*=checkbox]').isSelected(); // I verify 'Keep me signed in' is not selected 
+            
+            //  I Click 'Keep me signed in'
+            //clickKeepMeSignedIn = await $('input[type*=checkbox]').click() // Stating not clickable at this point 
+            //await browser.pause(1000)
+            // I verify 'Keep me signed in' is selected -> cant do this either as I cant click the button 
+
+
+
+    
+
+            console.log(`\nChecking 2nd checkbox Value ${isCheckBoxSelected2}`);
+
+
+        });
+        
+    });
