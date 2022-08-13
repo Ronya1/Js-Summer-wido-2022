@@ -20,7 +20,7 @@ const { expect } = require("chai");
 
 describe('feels Like Temp Is Between Low Temp and High Temp', () => {
     
-    it('Verify Temp', async () => {
+    it.only('Verify Temp', async () => {
         
        await browser.url('https://darksky.net/')
        await browser.pause(1000)
@@ -30,9 +30,20 @@ describe('feels Like Temp Is Between Low Temp and High Temp', () => {
        const lowTemp = await $('.low-temp-text').getText();
        //console.log(feelsLike + "Debug")
 
-        expect (feelsLike <= highTemp && feelsLike >= lowTemp, "Working").to.be.true;
+       // Need to convert the number to a degree 
+       const feelsLikeNoDegree = feelsLike.substring(0,feelsLike.length-1)
+       const highTempNoDegree = highTemp.substring(0,highTemp.length-1)
+       const lowTempNoDegree = lowTemp.substring(0,lowTemp.length-1)
 
-    });
+        //expect (feelsLike <= highTemp && feelsLike >= lowTemp, "Working").to.be.true;
+
+        // The below is all working and removing the degree with a dynamic length. 
+        console.log('number Debug')
+        console.log(`\nfeelsLikeNoDegree ${feelsLikeNoDegree}`) 
+        console.log(`\nhighTempNoDegree ${highTempNoDegree}`)
+        console.log(`\nlowTempNoDegree ${lowTempNoDegree}`)
+
+    });// Convert the degree into a number use substring (use dynamic length) - Exclude the Degree sign 
 
 
 });
@@ -51,11 +62,12 @@ describe('feels Like Temp Is Between Low Temp and High Temp', () => {
  *      I locate the zipCode field and I set the value to my zipcode 
  * Then:
  *      I verify I am able to obtain my temp. 
+ * //tagName[@attrName='attrValue']
  */
 
 describe('User is able to get their temp', () => {
     
-    it.only('ZipCode Temp Check', async() => {
+    it('ZipCode Temp Check', async() => {
     await browser.url('https://darksky.net/')
     await browser.pause(1000)    
 
@@ -63,10 +75,11 @@ describe('User is able to get their temp', () => {
     await searchBar.setValue('10013');
     await browser.pause(1000) 
 
-    await $('a[class=searchButton]').click();
+    await $('a[class=searchButton]').click(); //tagName[@attrName='attrValue']
     await browser.pause(2000) 
 
-    expect
+    // confirm state is NY 
+    // expect - what to put here? should it be true that they can get it how would you verify that? 
 
 //tagName[@attrName='attrValue']
 
@@ -78,8 +91,6 @@ describe('User is able to get their temp', () => {
 });
 
 
-
-
 /**
  * Tc-3:
  * https://www.facebook.com
@@ -88,6 +99,16 @@ describe('User is able to get their temp', () => {
  * expected error msg -> The email address or mobile number you entered isn't connected to an account.
  * 
  */
+/**
+ * GIVEN: 
+ *      I am on facebook.com 
+ * WHEN: 
+ *      I locate the submit button and press enter 
+ * VERIFY: 
+ *      User gets error message = to ______
+ * 
+ */
+
 
 /**
  * Tc-4:
