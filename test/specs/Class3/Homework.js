@@ -30,7 +30,7 @@ describe('feels Like Temp Is Between Low Temp and High Temp', () => {
        const lowTemp = await $('.low-temp-text').getText();
        //console.log(feelsLike + "Debug")
 
-       // Need to convert the number to a degree 
+       // Need to convert the degree to a number 
        const feelsLikeNoDegree = feelsLike.substring(0,feelsLike.length-1)
        const highTempNoDegree = highTemp.substring(0,highTemp.length-1)
        const lowTempNoDegree = lowTemp.substring(0,lowTemp.length-1)
@@ -169,6 +169,7 @@ describe('User is able to get their temp', () => {
     describe('Verify empty messenger login flow', () => {
         it.only('Empty Login Flow 1', async() => {
             await browser.url('https://www.facebook.com/') // goes to FB.com 
+            await browser.maximizeWindow()
             await browser.pause(1000)
 
             messengerLink = await $('a[title*=Messenger]').click(); // finds and clicks messenger 
@@ -177,24 +178,39 @@ describe('User is able to get their temp', () => {
             await browser.pause(1000)
             expect(messengerNotSelected, "Keep Me Signed In Is Selected").to.be.false // verifies the above to be false 
 
-            messengerPageLoginBtn = await $('button[id=loginbutton]').click(); // Finds and clicks login button
+            clickKeepMeSignedIn = await $('.uiInputLabelLabel'); // Finds and clicks login button
+            await clickKeepMeSignedIn.scrollIntoView()
+            await clickKeepMeSignedIn.click()
+            await browser.pause(1000)
+
+            messengerPageLoginBtn = await $('#loginbutton'); // Finds and clicks login button
+            await messengerPageLoginBtn.scrollIntoView()
+            await messengerPageLoginBtn.click()
             await browser.pause(1000)
 
             //  I verify Find your account and log in" is displayed 
             MessengerPageLink = await browser.getUrl() // got new url for the redirect
+
             isFindYourAcctPresent = await $('*=Find your account').isDisplayed(); // verifies that 'Find your account and log in" is displayed'
+            expect(isFindYourAcctPresent, "Find Your Account is NOT Present").to.be.true
+
             isContinueEnabled = await $('#loginbutton').isEnabled(); // Verifies 'Continue' button is enabled
+            expect(isContinueEnabled, "Continue Is Not Enabled").to.be.true
+
             isCheckBoxSelected2 = await $('input[type*=checkbox]').isSelected(); // I verify 'Keep me signed in' is not selected 
-            
+            expect(isCheckBoxSelected2, "Check Box Is Not Selected").to.be.false
+
             //  I Click 'Keep me signed in'
             //clickKeepMeSignedIn = await $('input[type*=checkbox]').click() // Stating not clickable at this point 
+            
+
+            clickKeepMeSignedIn2 = await $('.uiInputLabelLabel'); // Finds and clicks login button
+            await clickKeepMeSignedIn2.scrollIntoView()
+            await clickKeepMeSignedIn2.click()
+            await browser.pause(1000)
+
             //await browser.pause(1000)
             // I verify 'Keep me signed in' is selected -> cant do this either as I cant click the button 
-
-
-
-    
-
             console.log(`\nChecking 2nd checkbox Value ${isCheckBoxSelected2}`);
 
 
