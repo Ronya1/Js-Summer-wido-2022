@@ -12,7 +12,7 @@ const { expect } = require("chai");
 
 // The below code works but I get double the values why??
 describe('Get all timeline data', () => {
-  it('Get all Day Data', async () => {
+  it.only('Get all Day Data', async () => {
     await browser.url('https://darksky.net/')
     await browser.pause(2000)
 
@@ -26,6 +26,7 @@ describe('Get all timeline data', () => {
         console.log(await printTimes.getText());
         break;
     }
+// Print way to print length and confirm you get 12 
   })  
 
 
@@ -60,7 +61,7 @@ describe('Get all timeline data', () => {
 
 
    
-    it.only('Hotels.com', async() => {
+    it('Hotels.com', async() => {
         await browser.url('https://www.hotels.com')
         await browser.pause(500)
         let searchBarLocation = await $(`//button[@aria-label="Going to"]`).click()
