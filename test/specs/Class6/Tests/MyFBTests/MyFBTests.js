@@ -27,46 +27,61 @@ const { expect } = require('chai');
         // messengerLink = await $('a[title*=Messenger]').click(); // finds and clicks messenger 
         // await browser.pause(1000)
 
-        FB.launchFBMessenger()
+        await FB.launchFBMessenger()
+        //await browser.pause(2000)
 
-        messengerNotSelected = await $('div[class*=Label]').isSelected(); //confirms messenger is not selected (false value)
-        await browser.pause(1000)
-        expect(messengerNotSelected, "Keep Me Signed In Is Selected").to.be.false // verifies the above to be false 
+        //messengerNotSelected = await $('div[class*=Label]').isSelected(); //confirms messenger is not selected (false value)
+        let isMessengerSelected = await FB.ismessengerKeepMeSignedInSelected()
+        //await browser.pause(2000)
+        expect(isMessengerSelected, "Keep Me Signed In Is Selected").to.be.false // verifies the above to be false 
 
-        clickKeepMeSignedIn = await $('.uiInputLabelLabel'); // Finds and clicks login button
-        await clickKeepMeSignedIn.scrollIntoView()
-        await clickKeepMeSignedIn.click()
-        await browser.pause(1000)
+        // clickKeepMeSignedIn = await $('.uiInputLabelLabel'); // Finds and clicks login button
+        // await clickKeepMeSignedIn.scrollIntoView()
+        // await clickKeepMeSignedIn.click()
+        // await browser.pause(1000)
+        await FB.clickKeepMeSignedIn()
+        await browser.pause(2000)
 
-        messengerPageLoginBtn = await $('#loginbutton'); // Finds and clicks login button
-        await messengerPageLoginBtn.scrollIntoView()
-        await messengerPageLoginBtn.click()
-        await browser.pause(1000)
+
+        // messengerPageLoginBtn = await $('#loginbutton'); // Finds and clicks login button
+        // await messengerPageLoginBtn.scrollIntoView()
+        // await messengerPageLoginBtn.click()
+        // await browser.pause(1000)
+        FB.clickLoginButton()
+        await browser.pause(5000)
 
         //  I verify Find your account and log in" is displayed 
-        MessengerPageLink = await browser.getUrl() // got new url for the redirect
+        // MessengerPageLink = await browser.getUrl() // got new url for the redirect
+        // await browser.pause(2000)
+        let newUrlLinkMessengerRedirect = await FB.getNewUrl()
+        console.log(`\n\n Testing Return URL ${newUrlLinkMessengerRedirect}`);
 
-        isFindYourAcctPresent = await $('*=Find your account').isDisplayed(); // verifies that 'Find your account and log in" is displayed'
-        expect(isFindYourAcctPresent, "Find Your Account is NOT Present").to.be.true
+        // isFindYourAcctPresent = await $('*=Find your account').isDisplayed(); // verifies that 'Find your account and log in" is displayed'
+        // await browser.pause(2000)
+        let accountPresent = await FB.isFindyourAccountPresent()
+        expect(accountPresent, "Find Your Account is NOT Present").to.be.true
 
-        isContinueEnabled = await $('#loginbutton').isEnabled(); // Verifies 'Continue' button is enabled
-        expect(isContinueEnabled, "Continue Is Not Enabled").to.be.true
+        //isContinueEnabled = await $('#loginbutton').isEnabled(); // Verifies 'Continue' button is enabled
+        let isContinueEnabledOnRedirect = await FB.isContinueenabeled()
+        expect(isContinueEnabledOnRedirect, "Continue Is Not Enabled").to.be.true
 
-        isCheckBoxSelected2 = await $('input[type*=checkbox]').isSelected(); // I verify 'Keep me signed in' is not selected 
+        // isCheckBoxSelected2 = await $('input[type*=checkbox]').isSelected(); // I verify 'Keep me signed in' is not selected 
+        isCheckBoxSelected2 = await FB.isKeepMySignedInOnRedirectSelected()
         expect(isCheckBoxSelected2, "Check Box Is Not Selected").to.be.false
 
         //  I Click 'Keep me signed in'
         //clickKeepMeSignedIn = await $('input[type*=checkbox]').click() // Stating not clickable at this point 
-        
+        // clickKeepMeSignedIn2 = await $('.uiInputLabelLabel'); // Finds and clicks login button
+        // await clickKeepMeSignedIn2.scrollIntoView()
+        // await clickKeepMeSignedIn2.click()
+        // await browser.pause(1000)
+        await FB.clickKeepMeSignedInOnRedirect()
 
-        clickKeepMeSignedIn2 = await $('.uiInputLabelLabel'); // Finds and clicks login button
-        await clickKeepMeSignedIn2.scrollIntoView()
-        await clickKeepMeSignedIn2.click()
-        await browser.pause(1000)
+
 
         //await browser.pause(1000)
         // I verify 'Keep me signed in' is selected -> cant do this either as I cant click the button 
-        console.log(`\nChecking 2nd checkbox Value ${isCheckBoxSelected2}`);
+        //console.log(`\nChecking 2nd checkbox Value ${isCheckBoxSelected2}`);
 
 
     });
