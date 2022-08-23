@@ -1,6 +1,40 @@
 const myFBFunctions = require('../../POM/MyFacebookFunctions/myFBFunctions')
 const { expect } = require('chai');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Tc-4:
  * https://www.facebook.com
