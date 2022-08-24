@@ -5,6 +5,9 @@ class myFacebookFunctions {
 
     FBCommands = new myFBCommands
 
+    MainLoginPageButton = $('button[name=login]')
+    errorMessageWhenNoDetailsProvided = $('div*=The email or mobile')
+
     messengerLink = $('a[title*=Messenger]')
     messengerKeepMeSignedInCheckBox = $('div[class*=Label]')
     keepMeSignedInCheckBox = $('.uiInputLabelLabel')
@@ -26,11 +29,19 @@ class myFacebookFunctions {
     //         await browser.pause(1000)
     //         expect(messengerNotSelected, "Keep Me Signed In Is Selected").to.be.false // verifies the above to be false 
 
+    async launchFB(){
+        await browser.url('https://www.facebook.com/')//url should go on top with locators
+        await browser.pause(2000)
+    }
 
-    // async launchDarkSkyNet(){
-    //     await browser.url(this.WebsiteDomain)
-    //     await browser.pause(1000)
-    // }
+    async clickButton(){
+        this.MainLoginPageButton.click()
+    }
+
+    async getErrorMessagewhenNoDetailsAreProvided(errorMessageWhenNoDetailsProvided){
+        let errorMessage = this.errorMessageWhenNoDetailsProvided
+        return errorMessage.getText()
+    }
 
     async launchFBMessenger(){
         await browser.url('https://www.facebook.com/')//url should go on top with locators

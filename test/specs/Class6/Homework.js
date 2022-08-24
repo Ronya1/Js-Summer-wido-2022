@@ -46,7 +46,7 @@ describe('feels Like Temp Is Between Low Temp and High Temp', () => {
  */
 
 
- * describe('User is able to get their temp', () => {
+ describe('User is able to get their temp', () => {
     
     it('ZipCode Temp Check', async() => {
     await browser.url('https://darksky.net/')

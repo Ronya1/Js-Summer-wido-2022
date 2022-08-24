@@ -2,30 +2,39 @@ const myFBFunctions = require('../../POM/MyFacebookFunctions/myFBFunctions')
 const { expect } = require('chai');
 
 
+/**
+ * Tc-3:
+ * https://www.facebook.com
+ * 
+ * Verify user gets error message when submit empty login form
+ * expected error msg -> The email address or mobile number you entered isn't connected to an account.
+ * 
+ */
+ describe('User Gets Error Message', () => {
+        
+    it.only('verify user gets error message The email address or mobile number you entered isnt connected to an account', async () => {
+        const FB = new myFBFunctions();
+        // await browser.url('https://www.facebook.com/') // goes to FB.com
+        // await browser.pause(2000)
+        await FB.launchFB()
 
 
+        // btnClick_LogIn = $('button[name=login]').click(); // Click the Login button 
+        // await browser.pause(2000)
+        errorMessage = await FB.clickButton()
+        await browser.pause(2000)
 
+        // errorMessage = await $('div*=The email or mobile').getText();
+        // await browser.pause(2000)
+        errorMessage = await FB.getErrorMessagewhenNoDetailsAreProvided()
+        await browser.pause(2000)
 
+        // The below works and passed when changing a value in the includes function. 
+        expect(errorMessage.includes('The email or mobile number you entered isn’t connected to an account.'), "Error Message Contains The email address or mobile number you entered isnt connected to an account").to.be.true
+        //console.log(`\n Testing Error Message ${errorMessage}`) 
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 
 
@@ -53,7 +62,7 @@ const { expect } = require('chai');
 
  describe('Verify empty messenger login flow', () => {
 
-    it.only('Empty Login Flow 1', async() => {
+    it('Empty Login Flow 1', async() => {
         const FB = new myFBFunctions();
         // await browser.url('https://www.facebook.com/') // goes to FB.com 
         // await browser.maximizeWindow()
