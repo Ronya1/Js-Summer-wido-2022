@@ -23,16 +23,22 @@ describe('Hotels Test', () => {
 
 
        // Now need to click back to see August 20th 
-       let dateBackButton = await $(`//button[@data-stid="date-picker-paging"][1]`).click() //Not sure how to do it the other way 
-       await browser.pause(500)
+    //    let dateBackButton = await $(`//button[@data-stid="date-picker-paging"][1]`).click() //Not sure how to do it the other way 
+    //    await browser.pause(500)
+        await hotel.clickDateBackButton()
 
-
+        let dateAndTimeNow = await moment()
+        console.log(`\n\n TESTING AAAAA ${dateAndTimeNow}`);
+        let formattedDateToday = await dateAndTimeNow.format('DD')  
+        console.log(`\n\n TESTING DDDDD ${formattedDateToday}`);
        let augDisabledDateLocator = await $$(`//following-sibling::table//button[contains(@class, "is-disabled")]`)
-       let dateAndTimeNow = await moment()
-       let formattedDateToday = await dateAndTimeNow.format('DD') 
-       console.log(`\n\n DDDDDD ${formattedDateToday}`);     
        let lengthOfArray = augDisabledDateLocator.length
-       console.log(`\n\n LLLLLLL ${lengthOfArray}`); 
+
+        // let thisREsult = await hotel.RrturnNumOfDisabledDates()
+        // console.log(`/n/n CCCCCCC ${thisREsult}`);
+
+        expect(lengthOfArray, 'Length of Disabled Dates is Off').to.equal(formattedDateToday-1)
+
 
        //expect(augDisabledDateLocator)
     });
